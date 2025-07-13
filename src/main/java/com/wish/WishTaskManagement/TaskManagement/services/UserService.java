@@ -5,6 +5,5 @@ import com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO.UserResponseD
 
 public interface UserService {
     UserResponseDTO create(UserRequestDTO userRequestDTO);
-
-//    UserResponseDTO userDetail(String username);
+    UserResponseDTO userDetail(String token);
 }

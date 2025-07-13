@@ -38,11 +38,10 @@ public class UserController {
 
     @GetMapping("/details")
     public ResponseEntity<Object> getDetail(HttpServletRequest httpServletRequest){
-        String token = httpServletRequest.getHeader("Authorization");
+        String token = httpServletRequest.getHeader("Authorization").substring(7);
+        UserResponseDTO userDetail = userService.userDetail(token);
         Map<String,Object> obj = new HashMap<>();
-        Map<String,String> res = new HashMap<>();
-        res.put("Username",token);
-        obj.put("data",res);
+        obj.put("data",userDetail);
         obj.put("success",true);
         return ResponseEntity.status(HttpStatus.OK).body(obj);
     }

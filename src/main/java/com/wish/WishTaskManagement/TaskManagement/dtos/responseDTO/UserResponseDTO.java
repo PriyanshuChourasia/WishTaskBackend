@@ -9,6 +9,16 @@ public class UserResponseDTO {
 
     private String id;
 
+    private String name;
+
+    private String email;
+
+    @JsonProperty("username")
+    private String username;
+
+    @JsonProperty("profilePictureUrl")
+    private String profilePictureUrl;
+
     public String getId() {
         return id;
     }
@@ -48,14 +58,4 @@ public class UserResponseDTO {
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
     }
-
-    private String name;
-
-    private String email;
-
-    @JsonProperty("username")
-    private String username;
-
-    @JsonProperty("profilePictureUrl")
-    private String profilePictureUrl;
 }

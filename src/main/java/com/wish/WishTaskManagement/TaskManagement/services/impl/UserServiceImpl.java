@@ -1,5 +1,6 @@
 package com.wish.WishTaskManagement.TaskManagement.services.impl;
 
+import com.wish.WishTaskManagement.TaskManagement.config.jwt.JwtUtils;
 import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserRequestDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO.UserResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.entities.User;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MyUserDetailServiceImpl myUserDetailService;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @Override
     public UserResponseDTO create(UserRequestDTO userRequestDTO){
         if(userRepository.existsByEmail(userRequestDTO.getEmail())){
@@ -38,8 +42,11 @@ public class UserServiceImpl implements UserService {
         return UserMapper.toDTO(createUser);
     }
 
-//    @Override
-//    public UserResponseDTO userDetail(String username){
-//
-//    }
+    @Override
+    public UserResponseDTO userDetail(String token){
+        String username = jwtUtils.getUsernameFromJwt(token);
+        User user = userRepository.findByEmail(username);
+        UserResponseDTO userResponseDTO = UserMapper.toDTO(user);
+        return  userResponseDTO;
+    }
 }
