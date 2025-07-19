@@ -3,6 +3,8 @@ package com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wish.WishTaskManagement.TaskManagement.dtos.UserTypeDTO.UserTypeResponseDTO;
+import com.wish.WishTaskManagement.TaskManagement.entities.UserType;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponseDTO {
@@ -18,6 +20,16 @@ public class UserResponseDTO {
 
     @JsonProperty("profilePictureUrl")
     private String profilePictureUrl;
+
+    public UserTypeResponseDTO getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserTypeResponseDTO userType) {
+        this.userType = userType;
+    }
+
+    private UserTypeResponseDTO userType;
 
     public String getId() {
         return id;

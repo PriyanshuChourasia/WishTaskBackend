@@ -3,6 +3,8 @@ package com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.UUID;
+
 public class UserRequestDTO {
 
     public String getName() {
@@ -29,6 +31,15 @@ public class UserRequestDTO {
         this.password = password;
     }
 
+
+    public UUID getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UUID userType) {
+        this.userType = userType;
+    }
+
     @NotNull(message = "Name is required")
     private String name;
 
@@ -38,4 +49,7 @@ public class UserRequestDTO {
 
     @NotNull(message = "Password is required")
     private String password;
+
+
+    private UUID userType;
 }

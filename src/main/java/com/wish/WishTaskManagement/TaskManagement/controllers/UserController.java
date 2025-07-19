@@ -10,11 +10,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -25,6 +26,15 @@ public class UserController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @GetMapping("")
+    public ResponseEntity<Object> getAll(){
+        List<UserResponseDTO> userResponseDTOS = userService.getAll();
+        Map<String,Object> response = new HashMap<>();
+        response.put("data",userResponseDTOS);
+        response.put("success",true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 
     @PostMapping("/create")
@@ -44,5 +54,13 @@ public class UserController {
         obj.put("data",userDetail);
         obj.put("success",true);
         return ResponseEntity.status(HttpStatus.OK).body(obj);
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<Object> destroy(@Valid @PathVariable UUID id){
+        UUID uuid = id;
+        Map<String,UUID> response = new HashMap<>();
+        response.put("UUid",id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

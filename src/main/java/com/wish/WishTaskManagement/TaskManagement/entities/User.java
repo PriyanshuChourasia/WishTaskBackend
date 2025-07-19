@@ -1,12 +1,14 @@
 package com.wish.WishTaskManagement.TaskManagement.entities;
 
 
+import com.wish.WishTaskManagement.TaskManagement.utils.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -34,6 +36,10 @@ public class User {
     @Column(unique = true)
     @Email
     private String email;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_type_id", referencedColumnName = "id")
+    private UserType userType;
 
     @NotNull
     private String password;
@@ -79,6 +85,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public String getPassword() {
