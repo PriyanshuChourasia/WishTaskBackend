@@ -21,6 +21,8 @@ public class UserResponseDTO {
     @JsonProperty("profilePictureUrl")
     private String profilePictureUrl;
 
+    private UserTypeResponseDTO userType;
+
     public UserTypeResponseDTO getUserType() {
         return userType;
     }
@@ -29,7 +31,7 @@ public class UserResponseDTO {
         this.userType = userType;
     }
 
-    private UserTypeResponseDTO userType;
+
 
     public String getId() {
         return id;

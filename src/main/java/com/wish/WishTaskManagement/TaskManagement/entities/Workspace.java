@@ -1,6 +1,7 @@
 package com.wish.WishTaskManagement.TaskManagement.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.wish.WishTaskManagement.TaskManagement.utils.enums.ViewEnumStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,44 +11,32 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user_types")
-public class UserType {
+@Table(name = "workspaces")
+public class Workspace {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-
-    @NotNull
-    @Column(unique = true)
+    @NotNull(message = "Name is required")
     private String name;
 
-    private String alias;
+    @NotNull(message = "User ID cannot be null")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User workspaceuser;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "view_mode")
+    private ViewEnumStatus viewMode = ViewEnumStatus.PUBLIC;
 
-    private int level;
-
-    private String description;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "userType", cascade = CascadeType.ALL)
-    private List<User> users;
+    private Boolean shared = true;
 
     public UUID getId() {
         return id;
@@ -65,28 +54,28 @@ public class UserType {
         this.name = name;
     }
 
-    public String getAlias() {
-        return alias;
+    public User getWorkspaceuser() {
+        return workspaceuser;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setWorkspaceuser(User workspaceuser) {
+        this.workspaceuser = workspaceuser;
     }
 
-    public int getLevel() {
-        return level;
+    public ViewEnumStatus getViewMode() {
+        return viewMode;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setViewMode(ViewEnumStatus viewMode) {
+        this.viewMode = viewMode;
     }
 
-    public String getDescription() {
-        return description;
+    public Boolean getShared() {
+        return shared;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setShared(Boolean shared) {
+        this.shared = shared;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -105,12 +94,11 @@ public class UserType {
         this.updatedAt = updatedAt;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

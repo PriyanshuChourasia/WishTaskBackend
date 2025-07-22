@@ -1,18 +1,18 @@
 package com.wish.WishTaskManagement.TaskManagement.entities;
 
-
-import com.wish.WishTaskManagement.TaskManagement.utils.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,6 +21,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -29,17 +30,13 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "user_name", unique = true)
     private String username;
 
     @NotNull
-    @Column(unique = true)
     @Email
+    @Column(unique = true)
     private String email;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_type_id", referencedColumnName = "id")
-    private UserType userType;
 
     @NotNull
     private String password;
@@ -54,6 +51,31 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_type_id")
+    private UserType userType;
+
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "workspaceuser")
+    private List<Workspace> workspaces;
+
+    public List<Workspace> getWorkspaces() {
+        return workspaces;
+    }
+
+    public void setWorkspaces(List<Workspace> workspaces) {
+        this.workspaces = workspaces;
+    }
+
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public UUID getId() {
         return id;
@@ -87,15 +109,6 @@ public class User {
         this.email = email;
     }
 
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -120,12 +133,13 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public UserType getUserType() {
+        return userType;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
+
 
 }

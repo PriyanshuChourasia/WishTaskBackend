@@ -3,7 +3,10 @@ package com.wish.WishTaskManagement.TaskManagement.controllers;
 
 import com.wish.WishTaskManagement.TaskManagement.config.jwt.JwtUtils;
 import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserRequestDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserUpdateRequestDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserUpdateRoleDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO.UserResponseDTO;
+import com.wish.WishTaskManagement.TaskManagement.response.ResponseHandler;
 import com.wish.WishTaskManagement.TaskManagement.services.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -56,11 +59,30 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(obj);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> destroy(@Valid @PathVariable UUID id){
-        UUID uuid = id;
-        Map<String,UUID> response = new HashMap<>();
-        response.put("UUid",id);
+        userService.destroy(id);
+        Map<String,Object> response = new HashMap<>();
+        Map<String,String> msg = new HashMap<>();
+        msg.put("message","User deleted successfully");
+        response.put("data",msg);
+        response.put("success",true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@Valid @PathVariable UUID id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO){
+        UserResponseDTO userResponseDTO = userService.update(id,userUpdateRequestDTO);
+        Map<String,Object> response = new HashMap<>();
+        response.put("data",userResponseDTO);
+        response.put("success",true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> userRoleUpdate(@Valid @PathVariable UUID id, @RequestBody UserUpdateRoleDTO userUpdateRoleDTO){
+        userService.updateRole(id,userUpdateRoleDTO);
+        return ResponseHandler.responseBuilder(HttpStatus.OK,"User role updated successfully");
+    }
+
 }

@@ -42,7 +42,7 @@ public class GlobalException {
 
         res.put("message",ex.getMessage());
         obj.put("errors",res);
-        obj.put("success",true);
+        obj.put("success",false);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(obj);
     }
 
@@ -53,7 +53,7 @@ public class GlobalException {
         Map<String,String> res = new HashMap<>();
         res.put("message",ex.getMessage());
         obj.put("errors",res);
-        obj.put("success",true);
+        obj.put("success",false);
         return ResponseEntity.status(HttpStatus.FOUND).body(obj);
     }
 }

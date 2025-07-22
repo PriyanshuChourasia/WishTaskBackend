@@ -12,16 +12,16 @@ public class UserMapper {
         userResponseDTO.setName(user.getName());
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setProfilePictureUrl(user.getProfilePictureUrl());
-
-//        UserType
-        UserType userType = user.getUserType();
-        if(userType != null){
-            UserTypeResponseDTO userTypeResponseDTO = new UserTypeResponseDTO();
-            userTypeResponseDTO.setName(userType.getName());
-            userTypeResponseDTO.setLevel(userType.getLevel());
-            userResponseDTO.setUserType(userTypeResponseDTO);
+        userResponseDTO.setUsername(user.getUsername());
+        if(user.getUserType() != null){
+            UserType userType = user.getUserType();
+            if(userType != null){
+                UserTypeResponseDTO userTypeResponseDTO = new UserTypeResponseDTO();
+                userTypeResponseDTO.setName(userType.getName());
+                userTypeResponseDTO.setLevel(userType.getLevel());
+                userResponseDTO.setUserType(userTypeResponseDTO);
+            }
         }
-
         return userResponseDTO;
     }
 }

@@ -2,6 +2,8 @@ package com.wish.WishTaskManagement.TaskManagement.services.impl;
 
 import com.wish.WishTaskManagement.TaskManagement.config.jwt.JwtUtils;
 import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserRequestDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserUpdateRequestDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserUpdateRoleDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO.UserResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.entities.User;
 import com.wish.WishTaskManagement.TaskManagement.entities.UserType;
@@ -16,10 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
 public class UserServiceImpl implements UserService {
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -49,12 +53,14 @@ public class UserServiceImpl implements UserService {
         if(userRepository.existsByEmail(userRequestDTO.getEmail())){
             throw new DataExistsValidation("User already exists");
         }
-        UserType userType = userTypeRepository.findById(userRequestDTO.getUserType()).orElseThrow(()-> new DataNotExistsValidation("User type doesn't exists"));
-
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
-        user.setUserType(userType);
+        if(userRequestDTO.getUserType() != null){
+            System.out.println("Entered here without null check");
+            UserType userType = userTypeRepository.findById(UUID.fromString(userRequestDTO.getUserType())).orElseThrow(()-> new DataNotExistsValidation("User type doesn't exists"));
+            user.setUserType(userType);
+        }
         String encodedPassword = passwordEncoder.encode(userRequestDTO.getPassword());
         user.setPassword(encodedPassword);
         User createUser = userRepository.save(user);
@@ -67,5 +73,27 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(username);
         UserResponseDTO userResponseDTO = UserMapper.toDTO(user);
         return  userResponseDTO;
+    }
+
+    @Override
+    public UserResponseDTO update(UUID id, UserUpdateRequestDTO userUpdateRequestDTO){
+        User user = userRepository.findById(id).orElseThrow(()-> new DataNotExistsValidation("User doesn't exists"));
+        user.setName(userUpdateRequestDTO.getName());
+        user.setUsername(userUpdateRequestDTO.getUsername());
+        User updateUser = userRepository.save(user);
+        return UserMapper.toDTO(updateUser);
+    }
+
+    @Override
+    public void destroy(UUID id){
+        User user = userRepository.findById(id).orElseThrow(()-> new DataNotExistsValidation("User doesn't exists"));
+        userRepository.delete(user);
+    }
+
+    @Override
+    public void updateRole(UUID id, UserUpdateRoleDTO userUpdateRoleDTO){
+        User user = userRepository.findById(id).orElseThrow(()-> new DataNotExistsValidation("User doesn't exists"));
+        UserType userType = userTypeRepository.findById(UUID.fromString(userUpdateRoleDTO.getUserType())).orElseThrow(()-> new DataNotExistsValidation("Role doesn't exists"));
+        user.setUserType(userType);
     }
 }

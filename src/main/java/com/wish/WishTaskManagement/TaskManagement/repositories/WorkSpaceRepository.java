@@ -1,15 +1,13 @@
 package com.wish.WishTaskManagement.TaskManagement.repositories;
 
-import com.wish.WishTaskManagement.TaskManagement.entities.User;
+import com.wish.WishTaskManagement.TaskManagement.entities.Workspace;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
-    User findByEmail(String email);
+public interface WorkSpaceRepository extends JpaRepository<Workspace, UUID> {
 
-    boolean existsByEmail(String email);
     boolean existsById(UUID id);
 }

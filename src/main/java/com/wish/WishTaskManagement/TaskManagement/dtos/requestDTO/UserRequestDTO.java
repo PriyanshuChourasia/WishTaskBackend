@@ -31,12 +31,11 @@ public class UserRequestDTO {
         this.password = password;
     }
 
-
-    public UUID getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(UUID userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 
@@ -51,5 +50,6 @@ public class UserRequestDTO {
     private String password;
 
 
-    private UUID userType;
+
+    private String userType;
 }

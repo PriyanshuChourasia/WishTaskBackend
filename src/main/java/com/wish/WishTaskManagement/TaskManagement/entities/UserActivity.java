@@ -1,6 +1,7 @@
 package com.wish.WishTaskManagement.TaskManagement.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.wish.WishTaskManagement.TaskManagement.utils.enums.WorkStatusEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,44 +11,25 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user_types")
-public class UserType {
+@Table(name = "user_activities")
+public class UserActivity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-
     @NotNull
-    @Column(unique = true)
     private String name;
 
-    private String alias;
-
-
-    private int level;
+    private String topic;
 
     private String description;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "userType", cascade = CascadeType.ALL)
-    private List<User> users;
 
     public UUID getId() {
         return id;
@@ -65,20 +47,12 @@ public class UserType {
         this.name = name;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public String getDescription() {
@@ -87,6 +61,30 @@ public class UserType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public WorkStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(WorkStatusEnum status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -105,12 +103,19 @@ public class UserType {
         this.updatedAt = updatedAt;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
 
+    private WorkStatusEnum status = WorkStatusEnum.DRAFT;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
