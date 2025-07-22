@@ -29,15 +29,23 @@ public class UserActivity {
 
     private String topic;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "start_time", nullable = false)
-    private LocalDateTime startTime;
+    @NotNull
+    private LocalDateTime startTime = LocalDateTime.now();
 
-    @Column(name = "end_time", nullable = false)
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    @Enumerated(EnumType.STRING)
     private WorkStatusEnum status = WorkStatusEnum.DRAFT;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -118,5 +126,14 @@ public class UserActivity {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
 }

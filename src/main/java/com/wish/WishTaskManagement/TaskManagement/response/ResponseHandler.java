@@ -9,14 +9,18 @@ import java.util.Map;
 public class ResponseHandler {
     public static <T> ResponseEntity<Object> responseBuilder(HttpStatus httpStatus, T responseObject){
         Map<String,Object> response = new HashMap<>();
-        response.put("data",responseObject);
+        Map<String,Object> result = new HashMap<>();
+        result.put("results",responseObject);
+        response.put("data",result);
         response.put("success",true);
         return new ResponseEntity<>(response,httpStatus);
     }
 
     public static <T> ResponseEntity<Object> responseBuilder(HttpStatus httpStatus, Iterable<T> responseList){
         Map<String,Object> response = new HashMap<>();
-        response.put("data",responseList);
+        Map<String,Object> result = new HashMap<>();
+        result.put("results",responseList);
+        response.put("data",result);
         response.put("success",true);
         return new  ResponseEntity<>(response,httpStatus);
     }

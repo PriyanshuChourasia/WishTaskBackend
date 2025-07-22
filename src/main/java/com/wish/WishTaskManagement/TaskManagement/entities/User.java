@@ -10,9 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -55,6 +53,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "user_type_id")
     private UserType userType;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserActivity> userActivities;
 
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "workspaceuser")
@@ -141,5 +142,12 @@ public class User {
         this.userType = userType;
     }
 
+    public List<UserActivity> getUserActivities() {
+        return userActivities;
+    }
+
+    public void setUserActivities(List<UserActivity> userActivities) {
+        this.userActivities = userActivities;
+    }
 
 }
