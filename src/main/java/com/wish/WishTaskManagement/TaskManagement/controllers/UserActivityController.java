@@ -37,4 +37,6 @@ public class UserActivityController {
         UserActivityResponseDTO userActivityResponseDTO = userActivityService.createActivity(userActivityCreateDTO);
         return ResponseHandler.responseBuilder(HttpStatus.CREATED,userActivityResponseDTO);
     }
+
+
 }
