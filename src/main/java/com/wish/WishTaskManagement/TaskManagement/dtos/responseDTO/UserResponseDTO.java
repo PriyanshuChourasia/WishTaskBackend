@@ -4,7 +4,6 @@ package com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wish.WishTaskManagement.TaskManagement.dtos.UserTypeDTO.UserTypeResponseDTO;
-import com.wish.WishTaskManagement.TaskManagement.entities.UserType;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponseDTO {
@@ -23,15 +22,25 @@ public class UserResponseDTO {
 
     private UserTypeResponseDTO userType;
 
-    public UserTypeResponseDTO getUserType() {
-        return userType;
-    }
+    public UserResponseDTO(){}
 
-    public void setUserType(UserTypeResponseDTO userType) {
+    public UserResponseDTO(String id, String name, String email, String username, String profilePictureUrl, UserTypeResponseDTO userType){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.profilePictureUrl = profilePictureUrl;
         this.userType = userType;
     }
 
-
+    public UserResponseDTO(String id, String name, String email, String username, String profilePictureUrl){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.profilePictureUrl = profilePictureUrl;
+        this.userType = userType;
+    }
 
     public String getId() {
         return id;
@@ -72,4 +81,13 @@ public class UserResponseDTO {
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
     }
+
+    public UserTypeResponseDTO getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserTypeResponseDTO userType) {
+        this.userType = userType;
+    }
+
 }

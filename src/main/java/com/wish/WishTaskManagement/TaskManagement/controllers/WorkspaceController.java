@@ -32,4 +32,11 @@ public class WorkspaceController {
         WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.create(workspaceCreateDTO);
         return ResponseHandler.responseBuilder(HttpStatus.CREATED,workspaceResponseDTO);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> destroy(@Valid @PathVariable UUID id){
+        workSpaceService.destroy(id);
+        String message = "Workspace has been deleted";
+        return ResponseHandler.responseBuilder(HttpStatus.OK,message);
+    }
 }

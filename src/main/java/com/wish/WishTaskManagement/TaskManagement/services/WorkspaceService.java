@@ -13,4 +13,7 @@ public interface WorkspaceService {
     List<WorkspaceResponseDTO> getAll(UUID id);
 
     WorkspaceResponseDTO create(WorkspaceCreateDTO workspaceCreateDTO);
+
+//    Workspace ID to delete workspace
+    void destroy(UUID id);
 }
