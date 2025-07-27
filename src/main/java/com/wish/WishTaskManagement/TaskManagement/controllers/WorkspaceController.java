@@ -2,6 +2,7 @@ package com.wish.WishTaskManagement.TaskManagement.controllers;
 
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceCreateDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceResponseDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceViewStatusUpdateDTO;
 import com.wish.WishTaskManagement.TaskManagement.response.ResponseHandler;
 import com.wish.WishTaskManagement.TaskManagement.services.WorkspaceService;
 import com.wish.WishTaskManagement.TaskManagement.services.impl.WorkSpaceServiceImpl;
@@ -31,6 +32,13 @@ public class WorkspaceController {
     public ResponseEntity<Object> create(@Valid @RequestBody WorkspaceCreateDTO workspaceCreateDTO){
         WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.create(workspaceCreateDTO);
         return ResponseHandler.responseBuilder(HttpStatus.CREATED,workspaceResponseDTO);
+    }
+
+    @PatchMapping("/view-status/{id}")
+    public ResponseEntity<Object> viewStatus(@Valid @PathVariable UUID id, @RequestBody WorkspaceViewStatusUpdateDTO workspaceViewStatusUpdateDTO){
+        workSpaceService.updateViewMode(id,workspaceViewStatusUpdateDTO);
+        String message = "View Mode has been updated";
+        return ResponseHandler.responseBuilder(HttpStatus.OK,message);
     }
 
     @DeleteMapping("/{id}")

@@ -15,6 +15,12 @@ public class TaskManagementApplication implements CommandLineRunner {
 	@Value("${spring.app.URL}")
 	private String appURL;
 
+	@Value("${spring.swagger.URL}")
+	private String swaggerURL;
+
+	@Value("${spring.swagger.openAPIjson}")
+	private String OpenAPIJSON;
+
 	public static void main(String[] args) {
 		SpringApplication.run(TaskManagementApplication.class, args);
 	}
@@ -22,6 +28,8 @@ public class TaskManagementApplication implements CommandLineRunner {
 	@Override
 	public void run(final String... args){
 		logger.info("Application URL: {}",appURL);
+		logger.info("Swagger URL: {}",swaggerURL);
+		logger.info("JSON Docs: {}",OpenAPIJSON);
 	}
 
 }

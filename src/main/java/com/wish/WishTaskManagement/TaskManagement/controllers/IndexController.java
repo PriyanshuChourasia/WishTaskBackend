@@ -24,7 +24,7 @@ public class IndexController {
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
-    @GetMapping("/health-check")
+    @GetMapping("health-check")
     public ResponseEntity<Object> health(){
         Map<String,Object> response = new HashMap<>();
         response.put("data",true);

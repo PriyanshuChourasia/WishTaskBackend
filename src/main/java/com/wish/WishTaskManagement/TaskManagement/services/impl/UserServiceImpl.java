@@ -56,8 +56,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
-        if(userRequestDTO.getUserType() != null){
-            System.out.println("Entered here without null check");
+        if(!userRequestDTO.getUserType().isEmpty() && userRequestDTO.getUserType() != null){
             UserType userType = userTypeRepository.findById(UUID.fromString(userRequestDTO.getUserType())).orElseThrow(()-> new DataNotExistsValidation("User type doesn't exists"));
             user.setUserType(userType);
         }
