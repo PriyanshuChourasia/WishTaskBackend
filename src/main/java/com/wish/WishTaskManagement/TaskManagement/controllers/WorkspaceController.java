@@ -28,6 +28,12 @@ public class WorkspaceController {
         return ResponseHandler.responseBuilder(HttpStatus.OK,workspaceResponseDTOS);
     }
 
+    @GetMapping("/details/{id}")
+    public ResponseEntity<Object> getWorkspaceDetailById(@Valid @PathVariable UUID id){
+        WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.getWorkspaceDetailById(id);
+        return ResponseHandler.responseBuilder(HttpStatus.OK,workspaceResponseDTO);
+    }
+
     @PostMapping("")
     public ResponseEntity<Object> create(@Valid @RequestBody WorkspaceCreateDTO workspaceCreateDTO){
         WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.create(workspaceCreateDTO);

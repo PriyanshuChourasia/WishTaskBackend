@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -32,6 +33,9 @@ public class Workspace {
     @JoinColumn(name = "user_id")
     private User workspaceuser;
 
+    @OneToMany(mappedBy = "workspace")
+    private List<Project> projects;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "view_mode")
     private ViewEnumStatus viewMode = ViewEnumStatus.PUBLIC;
@@ -40,6 +44,14 @@ public class Workspace {
 
     public UUID getId() {
         return id;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     public void setId(UUID id) {

@@ -11,6 +11,8 @@ public interface WorkspaceService {
 
 //    List<WorkspaceResponseDTO> getAll();
 
+    WorkspaceResponseDTO getWorkspaceDetailById(UUID id);
+
     List<WorkspaceResponseDTO> getAll(UUID id);
 
     WorkspaceResponseDTO create(WorkspaceCreateDTO workspaceCreateDTO);

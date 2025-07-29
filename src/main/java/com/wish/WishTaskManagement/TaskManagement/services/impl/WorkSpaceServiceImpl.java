@@ -36,6 +36,12 @@ public class WorkSpaceServiceImpl implements WorkspaceService {
     }
 
     @Override
+    public WorkspaceResponseDTO getWorkspaceDetailById(UUID workspaceId){
+        Workspace workspace = workSpaceRepository.findById(workspaceId).orElseThrow(()-> new DataNotExistsValidation("Workspace doesn't exists"));
+        return WorkSpaceMapper.toDTO(workspace);
+    }
+
+    @Override
     public WorkspaceResponseDTO create(WorkspaceCreateDTO workspaceCreateDTO){
         Workspace workspace = new Workspace();
         workspace.setName(workspaceCreateDTO.getName());
