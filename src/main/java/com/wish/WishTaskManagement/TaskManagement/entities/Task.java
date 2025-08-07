@@ -1,6 +1,7 @@
 package com.wish.WishTaskManagement.TaskManagement.entities;
 
 
+import com.wish.WishTaskManagement.TaskManagement.utils.enums.WorkStatusEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -26,6 +29,7 @@ public class Task {
     @NotNull
     private String name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @NotNull
@@ -42,27 +46,27 @@ public class Task {
 
     @NotNull
     @Column(name = "assigned_date")
-    private LocalDateTime assignedDate;
-
+    private Instant assignedDate;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private Instant startDate;
 
     @Column(name = "tentative_date")
-    private LocalDateTime tentativeDate;
+    private Instant tentativeDate;
 
-    @Column(name = "submit_date")
-    private LocalDateTime submitDate;
+    @Enumerated(EnumType.STRING)
+    private WorkStatusEnum status = WorkStatusEnum.DRAFT;
 
-    private String status;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
     public UUID getId() {
         return id;
@@ -112,60 +116,63 @@ public class Task {
         this.assignedTo = assignedTo;
     }
 
-    public LocalDateTime getAssignedDate() {
+    public Instant getAssignedDate() {
         return assignedDate;
     }
 
-    public void setAssignedDate(LocalDateTime assignedDate) {
+    public void setAssignedDate(Instant assignedDate) {
         this.assignedDate = assignedDate;
     }
 
-    public LocalDateTime getStartDate() {
+    public Instant getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Instant startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getTentativeDate() {
+    public Instant getTentativeDate() {
         return tentativeDate;
     }
 
-    public void setTentativeDate(LocalDateTime tentativeDate) {
+    public void setTentativeDate(Instant tentativeDate) {
         this.tentativeDate = tentativeDate;
     }
 
-    public String getStatus() {
+    public WorkStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(WorkStatusEnum status) {
         this.status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public LocalDateTime getSubmitDate() {
-        return submitDate;
-    }
 
-    public void setSubmitDate(LocalDateTime submitDate) {
-        this.submitDate = submitDate;
-    }
+
 
 }

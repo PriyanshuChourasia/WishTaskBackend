@@ -50,6 +50,14 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public List<TeamMember> getTeamMembers() {
+        return teamMembers;
+    }
+
+    public void setTeamMembers(List<TeamMember> teamMembers) {
+        this.teamMembers = teamMembers;
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_type_id")
     private UserType userType;
@@ -57,9 +65,46 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserActivity> userActivities;
 
+    @OneToMany(mappedBy = "userId")
+    private List<Team> teams;
+
+    @OneToMany(mappedBy = "userId")
+    private List<TeamMember> teamMembers;
+
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "workspaceuser")
     private List<Workspace> workspaces;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
+    public List<StatusHistory> getStatusHistories() {
+        return statusHistories;
+    }
+
+    public void setStatusHistories(List<StatusHistory> statusHistories) {
+        this.statusHistories = statusHistories;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StatusHistory> statusHistories;
+
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
 
     public List<Workspace> getWorkspaces() {
         return workspaces;

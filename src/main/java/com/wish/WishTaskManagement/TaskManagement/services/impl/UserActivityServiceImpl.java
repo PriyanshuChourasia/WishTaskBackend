@@ -11,6 +11,8 @@ import com.wish.WishTaskManagement.TaskManagement.repositories.UserActivityRepos
 import com.wish.WishTaskManagement.TaskManagement.repositories.UserRepository;
 import com.wish.WishTaskManagement.TaskManagement.services.UserActivityService;
 import com.wish.WishTaskManagement.TaskManagement.utils.enums.WorkStatusEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ import java.util.UUID;
 @Service
 public class UserActivityServiceImpl implements UserActivityService {
 
+    private final static Logger logger = LoggerFactory.getLogger(UserActivityServiceImpl.class);
+
+
     @Autowired
     private UserActivityRepository userActivityRepository;
 
@@ -28,6 +33,7 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public List<UserActivityResponseDTO> getAllActivity(UUID id){
+        logger.info("USer Id: {}",id);
         List<UserActivity> userActivities = userActivityRepository.findByUserId(id);
         List<UserActivityResponseDTO> userActivityResponseDTOS = userActivities.stream().map(userActivity -> UserActivityMapper.toDTO(userActivity)).toList();
         return userActivityResponseDTOS;

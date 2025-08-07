@@ -1,6 +1,7 @@
 package com.wish.WishTaskManagement.TaskManagement.controllers;
 
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceCreateDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceDetailResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceViewStatusUpdateDTO;
 import com.wish.WishTaskManagement.TaskManagement.response.ResponseHandler;
@@ -30,7 +31,7 @@ public class WorkspaceController {
 
     @GetMapping("/details/{id}")
     public ResponseEntity<Object> getWorkspaceDetailById(@Valid @PathVariable UUID id){
-        WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.getWorkspaceDetailById(id);
+        WorkspaceDetailResponseDTO workspaceResponseDTO = workSpaceService.getWorkspaceDetailById(id);
         return ResponseHandler.responseBuilder(HttpStatus.OK,workspaceResponseDTO);
     }
 

@@ -4,6 +4,7 @@ package com.wish.WishTaskManagement.TaskManagement.controllers;
 import com.wish.WishTaskManagement.TaskManagement.dtos.UserActivityDTO.UserActivityCreateDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.UserActivityDTO.UserActivityResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.response.ResponseHandler;
+import com.wish.WishTaskManagement.TaskManagement.services.UserActivityService;
 import com.wish.WishTaskManagement.TaskManagement.services.impl.UserActivityServiceImpl;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -22,11 +23,13 @@ public class UserActivityController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserActivityController.class);
 
+
     @Autowired
-    private UserActivityServiceImpl userActivityService;
+    private UserActivityService userActivityService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getAllActivity(@Valid @PathVariable UUID id){
+        logger.info("Userrrrr ID: {}",id);
         List<UserActivityResponseDTO> userActivityResponseDTOS = userActivityService.getAllActivity(id);
         return ResponseHandler.responseBuilder(HttpStatus.OK,userActivityResponseDTOS);
     }

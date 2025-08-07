@@ -33,6 +33,11 @@ public class UserResponseDTO {
         this.userType = userType;
     }
 
+    public UserResponseDTO(String id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public UserResponseDTO(String id, String name, String email, String username, String profilePictureUrl){
         this.id = id;
         this.name = name;

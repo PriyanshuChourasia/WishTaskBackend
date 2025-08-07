@@ -2,12 +2,15 @@ package com.wish.WishTaskManagement.TaskManagement.services.impl;
 
 
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceCreateDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceDetailResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceViewStatusUpdateDTO;
+import com.wish.WishTaskManagement.TaskManagement.entities.Project;
 import com.wish.WishTaskManagement.TaskManagement.entities.User;
 import com.wish.WishTaskManagement.TaskManagement.entities.Workspace;
 import com.wish.WishTaskManagement.TaskManagement.exceptions.DataNotExistsValidation;
 import com.wish.WishTaskManagement.TaskManagement.mapper.WorkSpaceMapper;
+import com.wish.WishTaskManagement.TaskManagement.repositories.ProjectRepository;
 import com.wish.WishTaskManagement.TaskManagement.repositories.UserRepository;
 import com.wish.WishTaskManagement.TaskManagement.repositories.WorkSpaceRepository;
 import com.wish.WishTaskManagement.TaskManagement.services.WorkspaceService;
@@ -28,6 +31,9 @@ public class WorkSpaceServiceImpl implements WorkspaceService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
     @Override
     public List<WorkspaceResponseDTO> getAll(UUID id){
         List<Workspace> workspaces = workSpaceRepository.findByWorkspaceuser_Id(id);
@@ -36,9 +42,19 @@ public class WorkSpaceServiceImpl implements WorkspaceService {
     }
 
     @Override
-    public WorkspaceResponseDTO getWorkspaceDetailById(UUID workspaceId){
+    public WorkspaceDetailResponseDTO getWorkspaceDetailById(UUID workspaceId){
         Workspace workspace = workSpaceRepository.findById(workspaceId).orElseThrow(()-> new DataNotExistsValidation("Workspace doesn't exists"));
-        return WorkSpaceMapper.toDTO(workspace);
+        List<Project> projects = projectRepository.findByWorkspaceId(workspaceId);
+        WorkspaceDetailResponseDTO workspaceDetailResponseDTO = new WorkspaceDetailResponseDTO();
+        workspaceDetailResponseDTO.setId(workspace.getId().toString());
+        workspaceDetailResponseDTO.setCreatedAt(workspace.getCreatedAt().toString());
+        User user = workspace.getWorkspaceuser();
+        workspaceDetailResponseDTO.setCreatedBy(user.getName());
+        workspaceDetailResponseDTO.setNoOfProjects(projects.size());
+        workspaceDetailResponseDTO.setShared(workspace.getShared());
+        workspaceDetailResponseDTO.setViewMode(workspace.getViewMode().toString());
+        workspaceDetailResponseDTO.setName(workspace.getName());
+        return workspaceDetailResponseDTO;
     }
 
     @Override

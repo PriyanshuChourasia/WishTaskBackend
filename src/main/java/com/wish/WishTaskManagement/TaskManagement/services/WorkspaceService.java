@@ -1,6 +1,7 @@
 package com.wish.WishTaskManagement.TaskManagement.services;
 
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceCreateDTO;
+import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceDetailResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceViewStatusUpdateDTO;
 
@@ -11,7 +12,7 @@ public interface WorkspaceService {
 
 //    List<WorkspaceResponseDTO> getAll();
 
-    WorkspaceResponseDTO getWorkspaceDetailById(UUID id);
+    WorkspaceDetailResponseDTO getWorkspaceDetailById(UUID id);
 
     List<WorkspaceResponseDTO> getAll(UUID id);
 
