@@ -30,11 +30,13 @@ public class UserController {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @GetMapping("")
+    @GetMapping("/all")
     public ResponseEntity<Object> getAll(){
         List<UserResponseDTO> userResponseDTOS = userService.getAll();
         Map<String,Object> response = new HashMap<>();
-        response.put("data",userResponseDTOS);
+        Map<String,Object> result = new HashMap<>();
+        result.put("result",userResponseDTOS);
+        response.put("data",result);
         response.put("success",true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

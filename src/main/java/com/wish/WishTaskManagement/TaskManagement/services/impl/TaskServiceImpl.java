@@ -11,6 +11,7 @@ import com.wish.WishTaskManagement.TaskManagement.mapper.TaskMapper;
 import com.wish.WishTaskManagement.TaskManagement.repositories.TaskRepository;
 import com.wish.WishTaskManagement.TaskManagement.repositories.UserRepository;
 import com.wish.WishTaskManagement.TaskManagement.services.TaskService;
+import com.wish.WishTaskManagement.TaskManagement.utils.enums.PriorityEnum;
 import com.wish.WishTaskManagement.TaskManagement.utils.enums.WorkStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ public class TaskServiceImpl implements TaskService {
         task.setStartDate(taskRequestDTO.getStartDate());
         task.setStatus(WorkStatusEnum.valueOf(taskRequestDTO.getStatus()));
         task.setTentativeDate(taskRequestDTO.getTentativeDate());
+        task.setPriority(PriorityEnum.valueOf(taskRequestDTO.getPriority()));
         Task createdTask = taskRepository.save(task);
         TaskResponseDTO taskResponseDTO = new TaskResponseDTO();
         taskResponseDTO.setName(createdTask.getName());

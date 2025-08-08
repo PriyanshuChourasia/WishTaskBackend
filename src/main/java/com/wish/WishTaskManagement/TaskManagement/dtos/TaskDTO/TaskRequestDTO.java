@@ -19,6 +19,8 @@ public class TaskRequestDTO {
 
     private Instant tentativeDate = Instant.now();
 
+    private String priority;
+
     private String status;
 
     public String getName() {
@@ -93,5 +95,12 @@ public class TaskRequestDTO {
         this.status = status;
     }
 
+    public String getPriority(){
+        return this.priority;
+    }
+
+    public void setPriority(String priority){
+        this.priority = priority;
+    }
 
 }

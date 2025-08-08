@@ -1,5 +1,6 @@
 package com.wish.WishTaskManagement.TaskManagement.mapper;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wish.WishTaskManagement.TaskManagement.dtos.TaskDTO.TaskResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO.UserResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.entities.Task;
@@ -8,6 +9,7 @@ import com.wish.WishTaskManagement.TaskManagement.entities.User;
 import java.util.Map;
 import java.util.UUID;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskMapper {
     public static TaskResponseDTO toDTO(Task task, Map<UUID, User> userMap){
         TaskResponseDTO taskResponseDTO = new TaskResponseDTO();
@@ -20,6 +22,11 @@ public class TaskMapper {
         taskResponseDTO.setStartDate(task.getStartDate());
         taskResponseDTO.setTentativeDate(task.getTentativeDate());
         taskResponseDTO.setUpdatedAt(task.getUpdatedAt());
+
+        if(task.getPriority() != null){
+            taskResponseDTO.setPriority(task.getPriority().toString());
+        }
+
 
         User createdBy = userMap.get(task.getCreatedBy());
         User assignedBy = userMap.get(task.getAssignedBy());

@@ -1,6 +1,7 @@
 package com.wish.WishTaskManagement.TaskManagement.entities;
 
 
+import com.wish.WishTaskManagement.TaskManagement.utils.enums.PriorityEnum;
 import com.wish.WishTaskManagement.TaskManagement.utils.enums.WorkStatusEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -56,6 +57,9 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private WorkStatusEnum status = WorkStatusEnum.DRAFT;
+
+    @Enumerated(EnumType.STRING)
+    private PriorityEnum priority  = PriorityEnum.MEDIUM;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
@@ -172,7 +176,13 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
+    public PriorityEnum getPriority(){
+        return this.priority;
+    }
 
+    public void setPriority(PriorityEnum priority){
+        this.priority = priority;
+    }
 
 
 }

@@ -54,6 +54,8 @@ public class TaskResponseDTO {
 
     private Instant updatedAt;
 
+    private String priority;
+
 
     public String getId() {
         return id;
@@ -125,6 +127,14 @@ public class TaskResponseDTO {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getPriority(){
+        return this.priority;
+    }
+
+    public void setPriority(String priority){
+        this.priority = priority;
     }
 
 }
