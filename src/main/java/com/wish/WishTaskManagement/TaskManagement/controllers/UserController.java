@@ -7,7 +7,7 @@ import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserUpdateRequ
 import com.wish.WishTaskManagement.TaskManagement.dtos.requestDTO.UserUpdateRoleDTO;
 import com.wish.WishTaskManagement.TaskManagement.dtos.responseDTO.UserResponseDTO;
 import com.wish.WishTaskManagement.TaskManagement.response.ResponseHandler;
-import com.wish.WishTaskManagement.TaskManagement.services.impl.UserServiceImpl;
+import com.wish.WishTaskManagement.TaskManagement.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private JwtUtils jwtUtils;

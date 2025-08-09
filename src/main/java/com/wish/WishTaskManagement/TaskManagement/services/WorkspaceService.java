@@ -22,4 +22,7 @@ public interface WorkspaceService {
 
 //    Workspace ID to delete workspace
     void destroy(UUID id);
+
+//    Workspace share function
+    void workspaceShareUpdate(UUID id, boolean share);
 }

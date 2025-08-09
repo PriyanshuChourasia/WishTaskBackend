@@ -83,4 +83,11 @@ public class WorkSpaceServiceImpl implements WorkspaceService {
         Workspace workspace = workSpaceRepository.findById(id).orElseThrow(()-> new DataNotExistsValidation("Workspace doesn't exists"));
         workSpaceRepository.delete(workspace);
     }
+
+    @Override
+    public void workspaceShareUpdate(UUID id, boolean share){
+        Workspace workspace = workSpaceRepository.findById(id).orElseThrow(()-> new DataNotExistsValidation("Workspace doesn't exists"));
+        workspace.setShared(share);
+        workSpaceRepository.save(workspace);
+    }
 }

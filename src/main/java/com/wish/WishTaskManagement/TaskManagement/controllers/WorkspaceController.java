@@ -6,7 +6,6 @@ import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceRespon
 import com.wish.WishTaskManagement.TaskManagement.dtos.Workspace.WorkspaceViewStatusUpdateDTO;
 import com.wish.WishTaskManagement.TaskManagement.response.ResponseHandler;
 import com.wish.WishTaskManagement.TaskManagement.services.WorkspaceService;
-import com.wish.WishTaskManagement.TaskManagement.services.impl.WorkSpaceServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,14 @@ import java.util.UUID;
 public class WorkspaceController {
 
     @Autowired
-    private WorkSpaceServiceImpl workSpaceService;
+    private WorkspaceService workSpaceService;
+
+
+    @PostMapping("")
+    public ResponseEntity<Object> create(@Valid @RequestBody WorkspaceCreateDTO workspaceCreateDTO){
+        WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.create(workspaceCreateDTO);
+        return ResponseHandler.responseBuilder(HttpStatus.CREATED,workspaceResponseDTO);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getAll(@Valid @PathVariable UUID id){
@@ -35,12 +41,6 @@ public class WorkspaceController {
         return ResponseHandler.responseBuilder(HttpStatus.OK,workspaceResponseDTO);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Object> create(@Valid @RequestBody WorkspaceCreateDTO workspaceCreateDTO){
-        WorkspaceResponseDTO workspaceResponseDTO = workSpaceService.create(workspaceCreateDTO);
-        return ResponseHandler.responseBuilder(HttpStatus.CREATED,workspaceResponseDTO);
-    }
-
     @PatchMapping("/view-status/{id}")
     public ResponseEntity<Object> viewStatus(@Valid @PathVariable UUID id, @RequestBody WorkspaceViewStatusUpdateDTO workspaceViewStatusUpdateDTO){
         workSpaceService.updateViewMode(id,workspaceViewStatusUpdateDTO);
@@ -52,6 +52,13 @@ public class WorkspaceController {
     public ResponseEntity<Object> destroy(@Valid @PathVariable UUID id){
         workSpaceService.destroy(id);
         String message = "Workspace has been deleted";
+        return ResponseHandler.responseBuilder(HttpStatus.OK,message);
+    }
+
+    @GetMapping("/share")
+    public ResponseEntity<Object> shareUpdate(@RequestParam String workspaceId, @RequestParam boolean share){
+        workSpaceService.workspaceShareUpdate(UUID.fromString(workspaceId),share);
+        String message = "Workspace updated successfully";
         return ResponseHandler.responseBuilder(HttpStatus.OK,message);
     }
 }
